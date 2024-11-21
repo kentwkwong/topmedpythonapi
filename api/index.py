@@ -11,6 +11,10 @@ SMTP_PORT = 587
 EMAIL_ADDRESS = "wkwong.ca@gmail.com"
 EMAIL_PASSWORD = "hxhu xrpk hxwl dcxq"
 
+@app.route('/', methods=['GET'])
+def index():
+    return jsonify({"message": "HelloWorld"})
+
 @app.route('/sendemail', methods=['POST'])
 def sendemail():
     data = request.json
