@@ -1,10 +1,8 @@
 from flask import Flask, request, jsonify
 # import email_service
-from flask_cors import CORS
 from pymongo import MongoClient
 
 app = Flask(__name__)
-CORS(app)
 
 # Email configuration
 SMTP_SERVER = "smtp.gmail.com"  # Change if you're using another service
