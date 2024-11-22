@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from service import email_service
+#from service import email_service
 from pymongo import MongoClient
 
 app = Flask(__name__)
