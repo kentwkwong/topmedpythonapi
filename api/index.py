@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-import lib.email_helper, lib.user_service
+import lib.email_helper
 from flask_cors import CORS
 from pymongo import MongoClient
 
