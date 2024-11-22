@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from service import email_helper
+import email_service
 from flask_cors import CORS
 from pymongo import MongoClient
 
@@ -26,7 +26,7 @@ def register():
 
 @app.route('/sendingemail', methods=['POST'])
 def sendingemail():
-    result = email_helper.sendemail(request.json)
+    result = email_service.sendemail(request.json)
     return jsonify({"message":result.get("message")}), result.get("code")
 
 @app.route('/helloworld', methods=['GET'])
