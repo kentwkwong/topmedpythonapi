@@ -11,31 +11,35 @@ def sendemail(request):
     EMAIL_PASSWORD = "hxhu xrpk hxwl dcxq"
 
     print(request)
-    name = request.get('name')
-    partner = request.get('partner')
-    workfrom = request.get('workfrom')
-    workto = request.get('workto')
-    trucknum = request.get('truncknum')
-    hadlunch = request.get('hadlunch')
-    numofbreaks = request.get('numofbreaks')
+    name = request.get('displayName')
+    partner = request.get('partnerName')
+    workfrom = request.get('workFrom')
+    workfrom = datetime.strptime(workfrom, "%Y-%m-%dT%H:%M")
+    workto = request.get('workTo')
+    workto = datetime.strptime(workto, "%Y-%m-%dT%H:%M")
+    trucknum = request.get('truckNum')
+    hadlunch = request.get('hasLunch')
+    numofbreaks = request.get('breaksCount')
     remarks = request.get('remarks')
     time_diff = workto-workfrom
     time_diff -= timedelta(minutes=30) if hadlunch else 0
     total_seconds = time_diff.total_seconds()
-    hours = total_seconds // 3600
-    minutes = (total_seconds % 3600) // 60
+    hours = int(total_seconds // 3600)
+    minutes = int((total_seconds % 3600) // 60)
 
 
     message_body = workfrom.strftime("%d-%b-%Y %A")
     message_body += '<br />'
     message_body += f'{workfrom.strftime("%H%M")}-{workto.strftime("%H%M")}'
     message_body += '<br />'
-    message_body += f'Truck: {trucknum}'
+    message_body += f'Truck {trucknum}'
+    message_body += '<br />'
     message_body += f'{partner} {"WITH" if hadlunch else "NO"} Lunch'
     message_body += '<br />' 
     message_body += f'{hours} Hours {minutes} Minutes'
     message_body += '<br />' 
-    message_body += f'Remarks: {remarks}'
+    if (remarks != ""):
+        message_body += f'Remarks: {remarks}'
 
     recipient = 'kentwkwong@gmail.com'
     subject = f'{name} Timesheet {workfrom.strftime("%y%m%d")}'
