@@ -22,11 +22,10 @@ def register():
     # return jsonify(response), 400
 
 
-@app.route('/sendingemail', methods=['POST'])
-def sendingemail():
-    return {"message": "CORS working!"}, 200 
-    # result = email_service.sendemail(request.json)
-    # return jsonify({"message":result.get("message")}), result.get("code")
+@app.route('/sendtimesheetemail', methods=['POST'])
+def sendtimesheetemail():
+    result = email_service.sendemail(request.json)
+    return jsonify({"message":result.get("message")}), result.get("code")
 
 @app.route('/helloworld', methods=['GET'])
 def helloworld():
