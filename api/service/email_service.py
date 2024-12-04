@@ -22,7 +22,7 @@ def sendemail(request):
     numofbreaks = request.get('breaksCount')
     remarks = request.get('remarks')
     time_diff = workto-workfrom
-    time_diff -= timedelta(minutes=30) if hadlunch else 0
+    time_diff = time_diff - timedelta(minutes=30) if hadlunch else time_diff
     total_seconds = time_diff.total_seconds()
     hours = int(total_seconds // 3600)
     minutes = int((total_seconds % 3600) // 60)
