@@ -2,6 +2,10 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime, timedelta
+from .db_service import test_conn
+
+def testhw():
+    test_conn()
 
 # Email configuration
 def sendemail(request):

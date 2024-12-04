@@ -14,7 +14,7 @@ EMAIL_PASSWORD = "hxhu xrpk hxwl dcxq"
 
 @app.route('/', methods=['GET'])
 def index():
-    return jsonify({"message": "HelloWorld"})
+    return jsonify({"message": service_email.test_conn()})
 
 @app.route('/register', methods=['POST'])
 def register():
@@ -30,7 +30,7 @@ def sendtimesheetemail():
 
 @app.route('/helloworld', methods=['GET'])
 def helloworld():
-    return jsonify({"message":"hello world!"}), 400
+    return jsonify({"message":service_email.test_conn()}), 400
 
 if __name__ == '__main__':
     app.run(debug=True)
