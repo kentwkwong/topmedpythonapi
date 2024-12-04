@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from .service import email_service
 from pymongo import MongoClient
+import service_email, service_user
 
 app = Flask(__name__)
 CORS(app)
@@ -18,15 +18,14 @@ def index():
 
 @app.route('/register', methods=['POST'])
 def register():
-    return {"message": "CORS working!"}, 200
-    # data = request.get_json()
-    # response = lib.user_service.register(data)
-    # return jsonify(response), 400
+    data = request.get_json()
+    response = service_user.register(data)
+    return jsonify(response), 400
 
 
 @app.route('/sendtimesheetemail', methods=['POST'])
 def sendtimesheetemail():
-    result = email_service.sendemail(request.json)
+    result = service_email.sendemail(request.json)
     return jsonify({"message":result.get("message")}), result.get("code")
 
 @app.route('/helloworld', methods=['GET'])
