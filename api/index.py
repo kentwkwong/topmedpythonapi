@@ -14,7 +14,7 @@ EMAIL_PASSWORD = "hxhu xrpk hxwl dcxq"
 
 @app.route('/', methods=['GET'])
 def index():
-    return jsonify({"message": app.sayhelloworld()})
+    return jsonify({"message": "heeeeeeello world"})
 
 @app.route('/register', methods=['POST'])
 def register():
