@@ -22,6 +22,13 @@ def register():
     response = db_service.register(data)
     return jsonify(response), 400
 
+@app.route('/verifypassword', methods=['POST'])
+def verifypassword():
+    data = request.get_json()
+    password = data.get('password')
+    hash = "$2b$12$Ul6tF6leOUc/6AZvHaA19eNpJZmVd91e3Naq8pvaocc9sF5y71T0q"
+    result = db_service.verify_password(password, hash)
+    return jsonify({"message":result}), 400
 
 @app.route('/sendtimesheetemail', methods=['POST'])
 def sendtimesheetemail():
