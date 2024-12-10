@@ -1,14 +1,33 @@
 from pymongo import MongoClient
 import os
 import bcrypt
+from bson import json_util
 
 db_conn = os.getenv('DB_CONNECTION_STRING')
 
 
 client = MongoClient("mongodb://localhost:27017/")
 client = MongoClient(db_conn)
-db = client.topmed
-users_collection = db.users
+db = client["topmed"]
+users_collection = db["users"]
+timesheet_collection = db["timesheets"]
+
+def insert_timesheet(data):
+    try:
+        # Insert the JSON data into MongoDB
+        if isinstance(data, list):
+            result = timesheet_collection.insert_many(data)
+        else:
+            result = timesheet_collection.insert_one(data)
+        return ''
+    except Exception as e:
+        return "An error occurred: ", e
+
+
+def get_all_timesheet():
+    result = list(timesheet_collection.find({}))
+    json_results = json_util.dumps(result, indent=4) 
+    return json_results
 
 def register(data):
     username = data.get('username')
