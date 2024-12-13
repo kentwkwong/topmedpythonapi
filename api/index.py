@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from pymongo import MongoClient
-from service import db_service, email_service, util_service
+from .service import db_service, email_service, util_service
 from bson import json_util
 
 app = Flask(__name__)
