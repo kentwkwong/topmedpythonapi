@@ -49,6 +49,13 @@ def sendemail(request):
     if (remarks != ""):
         message_body += f'Remarks: {remarks}'
 
+    message_body += '<br />'
+    message_body += '<br />'
+    message_body += '<br />'
+    message_body += '<br />'
+    message_body += '<i>System generated email</i>'
+    message_body += '<br />'
+
 
     subject = f'{name} Timesheet {workfrom.strftime("%y%m%d")}'
     print('1-----------')
