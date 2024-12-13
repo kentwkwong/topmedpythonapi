@@ -12,6 +12,30 @@ db = client["topmed"]
 users_collection = db["users"]
 timesheet_collection = db["timesheets"]
 
+def get_user(user):
+    try:
+        result = users_collection.find_one({"username":user})
+        return result
+    except Exception as e:
+        return None
+    
+
+def login(email, password):
+    try:
+        result = users_collection.find_one({"email":email})
+        if (result != None):
+            chkpw = verify_password(password, result["password"] )
+            if chkpw:
+                print("cp-true")
+                return {"username":result["username"]}
+            else:
+                print("cp-false")
+                return None
+        else:
+            raise Exception("Email not existed!")
+    except Exception as e:
+        raise e
+
 def insert_timesheet(data):
     try:
         # Insert the JSON data into MongoDB
@@ -26,8 +50,7 @@ def insert_timesheet(data):
 
 def get_all_timesheet():
     result = list(timesheet_collection.find({}))
-    json_results = json_util.dumps(result, indent=4) 
-    return json_results
+    return result
 
 def register(data):
     username = data.get('username')

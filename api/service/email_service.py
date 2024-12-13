@@ -2,6 +2,7 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime, timedelta
+import os
 
 # Email configuration
 def sendemail(request):
@@ -10,7 +11,10 @@ def sendemail(request):
     EMAIL_ADDRESS = "wkwong.ca@gmail.com"
     EMAIL_PASSWORD = "hxhu xrpk hxwl dcxq"
 
-    print(request)
+    print('-----------')
+    recipient_to = os.getenv('TIME_SHEET_TO')
+    recipient_cc = request.get('email')
+    print(recipient_cc)
     name = request.get('displayName')
     partner = request.get('partnerName')
     workfrom = request.get('workFrom')
@@ -19,7 +23,7 @@ def sendemail(request):
     workto = datetime.strptime(workto, "%Y-%m-%dT%H:%M")
     trucknum = request.get('truckNum')
     hadlunch = request.get('hasLunch')
-    numofbreaks = request.get('breaksCount')
+    breaksCount = int(request.get('breaksCount'))
     remarks = request.get('remarks')
     time_diff = workto-workfrom
     time_diff = time_diff - timedelta(minutes=30) if hadlunch else time_diff
@@ -36,32 +40,38 @@ def sendemail(request):
     message_body += '<br />'
     message_body += f'{partner} {"WITH" if hadlunch else "NO"} Lunch'
     message_body += '<br />' 
+    if (breaksCount > 0):
+        message_body += f'Break: {breaksCount}'
+        message_body += '<br />'
     message_body += f'{hours} Hours {minutes} Minutes'
     message_body += '<br />' 
     if (remarks != ""):
         message_body += f'Remarks: {remarks}'
 
-    recipient = 'kentwkwong@gmail.com'
-    subject = f'{name} Timesheet {workfrom.strftime("%y%m%d")}'
-    message_body = message_body
 
-    if not recipient or not subject or not message_body:
+    subject = f'{name} Timesheet {workfrom.strftime("%y%m%d")}'
+    print('1-----------')
+
+    if not recipient_cc or not subject or not message_body:
         return {"message": "E! Missing required fields", "code": 400}
 
     try:
         # Create the email
         message = MIMEMultipart()
         message['From'] = EMAIL_ADDRESS
-        message['To'] = recipient
+        message['To'] = recipient_to
+        message['Cc'] = recipient_cc
         message['Subject'] = subject
         message.attach(MIMEText(message_body, 'html'))
 
+        print('1-----------')
         # Send the email
         with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+            print('2-----------')
             server.starttls()
             server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
             server.send_message(message)
-
+            print('3-----------')
         return {"message": "Email sent successfully!", "code": 200}
 
     except Exception as e:
