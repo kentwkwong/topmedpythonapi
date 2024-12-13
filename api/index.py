@@ -15,7 +15,7 @@ def index():
 def register():
     data = request.get_json()
     response = db_service.register(data)
-    return jsonify(response), 400
+    return jsonify(response), 200
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -30,7 +30,7 @@ def verifypassword():
     password = data.get('password')
     hash = "$2b$12$Ul6tF6leOUc/6AZvHaA19eNpJZmVd91e3Naq8pvaocc9sF5y71T0q"
     result = db_service.verify_password(password, hash)
-    return jsonify({"message":result}), 400
+    return jsonify({"message":result}), 200
 
 @app.route('/sendtimesheetemail', methods=['POST'])
 def sendtimesheetemail():
@@ -63,7 +63,7 @@ def getalltimesheet():
 
 @app.route('/helloworld', methods=['GET'])
 def helloworld():
-    return jsonify({"message":"hard code helloworld"}), 400
+    return jsonify({"message":"hard code helloworld"}), 200
 
 if __name__ == '__main__':
     app.run(debug=True)
