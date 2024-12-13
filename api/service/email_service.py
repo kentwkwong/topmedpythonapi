@@ -12,7 +12,8 @@ def sendemail(request):
     EMAIL_PASSWORD = "hxhu xrpk hxwl dcxq"
 
     print('-----------')
-    recipient_to = os.getenv('TIME_SHEET_TO')
+    # recipient_to = os.getenv('TIME_SHEET_TO')
+    recipient_to = request.get('email')
     recipient_cc = request.get('email')
     print(recipient_cc)
     name = request.get('displayName')
