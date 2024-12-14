@@ -4,7 +4,7 @@ import bcrypt
 from bson import json_util
 
 db_conn = os.getenv('DB_CONNECTION_STRING')
-history_count = int(os.getenv('HISTORY_COUNT'))
+history_count = os.getenv('HISTORY_COUNT')
 print(type(history_count))
 client = MongoClient(db_conn)
 db = client["topmed"]
@@ -23,6 +23,6 @@ def insert_timesheet(data):
 
 
 def get_timesheet_by_name(name):
-    result = list(timesheet_collection.find({"name":name}).sort("from",-1).limit(history_count))
+    result = list(timesheet_collection.find({"name":name}).sort("from",-1).limit(int(history_count)))
     return result
 
