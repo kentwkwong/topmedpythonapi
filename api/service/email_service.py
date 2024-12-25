@@ -27,9 +27,11 @@ def sendemail(request):
     remarks = request.get('remarks')
     time_diff = workto-workfrom
     time_diff = time_diff - timedelta(minutes=30) if hadlunch else time_diff
-    total_seconds = time_diff.total_seconds()
-    hours = int(total_seconds // 3600)
-    minutes = int((total_seconds % 3600) // 60)
+    # total_seconds = time_diff.total_seconds()
+    # hours = int(total_seconds // 3600)
+    # minutes = int((total_seconds % 3600) // 60)
+    hours = request.get('hours')
+    minutes = request.get('minutes')
 
 
     message_body = workfrom.strftime("%d-%b-%Y %A")

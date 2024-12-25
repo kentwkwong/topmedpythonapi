@@ -29,9 +29,8 @@ def sendtimesheetemail():
     timesheet_service.insert_timesheet(data)   
     user = user_service.get_user(data.get('name'))
     data['email'] = user['email']
-    print(data)
-
-    response = email_service.sendemail(data)
+    data_with_hours = util_service.calculate_work_hours(data)
+    response = email_service.sendemail(data_with_hours)
     return jsonify(response)
 
 
@@ -39,7 +38,8 @@ def sendtimesheetemail():
 def getalltimesheet():
     name = request.args.get('name')
     result = timesheet_service.get_timesheet_by_name(name)
-    json_results = json_util.dumps(result, indent=4) 
+    result_with_hours = util_service.calculate_work_hours(result)
+    json_results = json_util.dumps(result_with_hours, indent=4) 
     print(json_results)
     return json_results
 
