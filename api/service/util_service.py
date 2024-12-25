@@ -7,9 +7,9 @@ def return_json(data):
 
 def calculate_work_hours(data):
     workfrom = data.get('from')
-    workfrom = data.strptime(workfrom, "%Y-%m-%dT%H:%M")
+    workfrom = datetime.strptime(workfrom, "%Y-%m-%dT%H:%M")
     workto = data.get('to')
-    workto = data.strptime(workto, "%Y-%m-%dT%H:%M")
+    workto = datetime.strptime(workto, "%Y-%m-%dT%H:%M")
     hadlunch = data.get('lunch')
     time_diff = workto-workfrom
     time_diff = time_diff - timedelta(minutes=30) if hadlunch else time_diff

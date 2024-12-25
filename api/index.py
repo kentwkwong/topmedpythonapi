@@ -38,8 +38,10 @@ def sendtimesheetemail():
 def getalltimesheet():
     name = request.args.get('name')
     result = timesheet_service.get_timesheet_by_name(name)
-    result_with_hours = util_service.calculate_work_hours(result)
-    json_results = json_util.dumps(result_with_hours, indent=4) 
+    for item in result:
+        print(item)
+        item = util_service.calculate_work_hours(item)
+    json_results = json_util.dumps(result, indent=4) 
     print(json_results)
     return json_results
 
