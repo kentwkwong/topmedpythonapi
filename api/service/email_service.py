@@ -9,6 +9,7 @@ def sendemail(request):
     SMTP_SERVER = "smtp.gmail.com"  # Change if you're using another service
     SMTP_PORT = 587
     EMAIL_ADDRESS = os.getenv('TIME_SHEET_FROM')
+    EMAIL_NAME = os.getenv('TIME_SHEET_FROM_NAME')
     EMAIL_PASSWORD = os.getenv('TIME_SHEET_FROM_CODE')
 
     # recipient_to = os.getenv('TIME_SHEET_TO')
@@ -63,7 +64,7 @@ def sendemail(request):
     try:
         # Create the email
         message = MIMEMultipart()
-        message['From'] = EMAIL_ADDRESS
+        message['From'] = f"{EMAIL_NAME} <{EMAIL_ADDRESS}>" 
         message['To'] = recipient_to
         message['Cc'] = recipient_cc
         message['Subject'] = subject
