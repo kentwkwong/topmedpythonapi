@@ -39,10 +39,18 @@ def getalltimesheet():
     name = request.args.get('name')
     result = timesheet_service.get_timesheet_by_name(name)
     for item in result:
-        print(item)
         item = util_service.calculate_work_hours(item)
     json_results = json_util.dumps(result, indent=4) 
-    print(json_results)
+    return json_results
+
+@app.route('/getweeklytimesheetbyname', methods=['GET'])
+def getweeklytimesheet():
+    name = request.args.get('name')
+    result = timesheet_service.get_timesheet_by_name(name)
+    for item in result:
+        item = util_service.calculate_work_hours(item)
+    result = util_service.group_weekly_hours(result)
+    json_results = json_util.dumps(result, indent=4) 
     return json_results
 
 @app.route('/helloworld', methods=['GET'])

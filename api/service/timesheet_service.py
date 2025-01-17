@@ -5,7 +5,6 @@ from bson import json_util
 
 db_conn = os.getenv('DB_CONNECTION_STRING')
 history_count = os.getenv('HISTORY_COUNT')
-print(type(history_count))
 client = MongoClient(db_conn)
 db = client["topmed"]
 timesheet_collection = db["timesheets"]
