@@ -32,7 +32,6 @@ def sendemail(request):
     # hours = int(total_seconds // 3600)
     # minutes = int((total_seconds % 3600) // 60)
     hours = request.get('hours')
-    minutes = request.get('minutes')
 
 
     message_body = workfrom.strftime("%d-%b-%Y %A")
@@ -46,7 +45,7 @@ def sendemail(request):
     if (breaksCount > 0):
         message_body += f'Break: {breaksCount}'
         message_body += '<br />'
-    message_body += f'{hours} Hours {minutes} Minutes'
+    message_body += f'{hours} Hours'
     message_body += '<br />' 
     if (remarks != ""):
         message_body += f'Remarks: {remarks}'
@@ -55,7 +54,7 @@ def sendemail(request):
     message_body += '<br />'
     message_body += '<br />'
     message_body += '<br />'
-    message_body += '<i>System generated email</i>'
+    message_body += '<i>Top Med Timesheet generated email</i>'
     message_body += '<br />'
 
 
