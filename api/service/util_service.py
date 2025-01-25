@@ -38,7 +38,8 @@ def group_weekly_hours(data):
     result = [
         {
             # "period": f"{monday.strftime('%Y-%m-%d')} to {(monday + timedelta(days=6)).strftime('%Y-%m-%d')}",
-            "week": f"{monday}",
+            # "week": f"{monday}",
+            "week": f"{monday} to {(datetime.strptime(monday, '%Y-%m-%d') + timedelta(days=6)).strftime('%Y-%m-%d')}",
             "hours": hours
         }
         for monday, hours in sorted(weekly_data.items(), reverse=True)  # Descending order
