@@ -12,8 +12,7 @@ def sendemail(request):
     EMAIL_NAME = os.getenv('TIME_SHEET_FROM_NAME')
     EMAIL_PASSWORD = os.getenv('TIME_SHEET_FROM_CODE')
 
-    # recipient_to = os.getenv('TIME_SHEET_TO')
-    recipient_to = request.get('email')
+    recipient_to = os.getenv('TIME_SHEET_TO')
     recipient_cc = request.get('email')
     print(recipient_cc)
     name = request.get('name')
